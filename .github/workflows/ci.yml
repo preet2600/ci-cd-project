@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI with Docker Automation
 
 on:
   push:
@@ -12,13 +12,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run app
-        run: node index.js &
+      - name: Build Docker image
+        run: docker build -t ci-cd-app .
